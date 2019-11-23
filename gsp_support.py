@@ -189,9 +189,12 @@ def generate_appliance_powerseries(appliance_pairs,DelP):
             instance.append(temp)
             instance.append([abs(DelP[end])])
             final = [j for sub in instance for j in sub]
+            #final2 = np.array(final, dtype=np.float64)
             timeval = range(start,end+1,1)
             #print (event)
-            powerval = interpolate_values(final) if sum(np.isnan(final)) else final
+            # powerval = interpolate_values(final2) if sum(np.isnan(final2)) else final2
+            powerval = interpolate_values(final) if sum(pd.isnull(final)) else final
+            powerval = list(powerval)
             timeseq.append(timeval)
             powerseq.append(powerval)
         powerseq =  [j for sub in powerseq for j in sub]
@@ -217,11 +220,12 @@ def label_appliances(appliance_signatures, signature_database, threshold):
         for j in range(columnsr):
             last_idxr = dfr.iloc[:,j].last_valid_index()
             last_idxw = dfw.iloc[:,i].last_valid_index()
+            
             D = FastDTW(dfw.iloc[:last_idxw,i].values, dfr.iloc[:last_idxr,j].values, 10)
             if D < threshold:
                 print("          > found match " + str(i+1) + " with " + dfr.iloc[:0,j].name)
                 labeled_appliances[i] = dfr.iloc[:0,j].name
-
+            
     return labeled_appliances
 
 #%%
@@ -276,7 +280,7 @@ def write_csv_df(path, filename, df):
         elif overwrite == 'n':
             return
         else:
-            print "Not a valid input. Data is NOT saved!\n"
+            print ("Not a valid input. Data is NOT saved!\n")
     return
 
 #%%
@@ -334,7 +338,7 @@ def create_appliance_timeseries(power_series,main_ind):
 #%%
 def refined_clustering_block(event,delta_p,sigma,ri):
     '''this section performs clustering as explained in Figure 1 (Flowchart) of the IEEE Acess paper'''
-    sigmas = [sigma,sigma/2,sigma/4,sigma/8,sigma/14,sigma/32,sigma/64]
+    sigmas = [sigma,sigma/2,sigma/4,sigma/8,sigma/16,sigma/32,sigma/64]
     Finalcluster = []
     for k in range(0,len(sigmas)):
         clusters = []     
@@ -399,7 +403,7 @@ def pair_clusters_appliance_wise(Finalcluster, data_vec, delta_p, instancelimit)
     #%
     # Here I reduce number of clusters. I keep clusters with more than or equal 'instancelimit' members as such and in next cell I merge cluster with less than 5 members to clusters with more than 'instancelimit' members 
     # DelP seems redundant but lets move on
-    DelP = [round(data_vec[i+1]-data_vec[i],2) for i in range(0,len(data_vec)-1)]
+    DelP = [np.round(data_vec[i+1]-data_vec[i],2) for i in range(0,len(data_vec)-1)]
     Newcluster_1 = []
     Newtable = []
     #instancelimit = 20
