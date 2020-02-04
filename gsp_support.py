@@ -211,18 +211,22 @@ def label_appliances(appliance_signatures, signature_database, threshold):
     dfw = pd.concat(appliance_signatures, axis = 1, ignore_index=True)
     dfw.drop(dfw.index[1], axis=1)
     #dfw.to_csv("signature_database.csv")
-
+   #  d_list = []
+    
     dfr = pd.read_csv(signature_database, index_col=0)
     rowr, columnsr = dfr.shape
     roww, columnsw = dfw.shape
     print("        > found "+ str(columnsw) + " appliances. Verifying signature matching")
     for i in range(columnsw):
+        #d_list.append([])
         for j in range(columnsr):
             last_idxr = dfr.iloc[:,j].last_valid_index()
             last_idxw = dfw.iloc[:,i].last_valid_index()
             
             D = FastDTW(dfw.iloc[:last_idxw,i].values, dfr.iloc[:last_idxr,j].values, 10)
+            # d_list[i].append(D)
             if D < threshold:
+            # if D > threshold_min and D < threshold_max:
                 print("          > found match " + str(i+1) + " with " + dfr.iloc[:0,j].name)
                 labeled_appliances[i] = dfr.iloc[:0,j].name
             
