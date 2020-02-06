@@ -198,8 +198,6 @@ beta  = 0.5
 # this defines the  minimum number of times an appliance is set ON in considered time duration
 instancelimit = 3
 
-
-#%% 
 t1 = time.time() 
 
 main_val = df.values # get only readings
@@ -553,66 +551,62 @@ dfw.to_csv("../Data/REFIT/signatures/signature_house_8.csv")
 #Demo encontrou 14 eletrodomésticos, com threshold = 3000
 
 #True positives
-#0 e 10, 'refrigerator', TP = 7032 (0), TP = 4338 (10)
-#1, 'kitchen_outlets1', TP = 8137
-#2, 'kitchen_outlets2', TP = 5204
-#3, 'microwave', TP = 9786
-#4, 5, 6, 7, 8, 9 'lighting', TP = 8678 (4), TP = 8704 (5), TP = 9746 (6), TP = 9038 (7), TP = 8840 (8), TP = 8539 (9)
+#0 e 10, 'refrigerator', TP = 7032 (TP = 108) (0), TP = 4338 (TP = 0) (10)
+#1, 'kitchen_outlets1', TP = 8137 (TP = 3417)
+#2, 'kitchen_outlets2', TP = 9891 (TP = 47)
+#3, 'microwave', TP = 9786 (TP = 0)
+#4, 5, 6, 7, 8, 9 'lighting', TP = 8678 (TP = 0) (4), TP = 8704 (TP = 0) (5), TP = 9746 (TP = 2) (6), TP = 9038 (TP = 3) (7), TP = 8840 (TP = 0) (8), TP = 8539 (TP = 0) (9)
 
-TP = 0
-for k in range(len(dfd['refrigerator'].values)):
-    try:  
-        if abs(dfd['refrigerator'].values[k] - gsp_result.ix[:,0].values[k]) <= 10:
-            TP += 1
-    except:
-        break
-print TP
-
-TP = 0
-for k in range(len(dfd['lighting'].values)):
-    try:  
-        if abs(dfd['lighting'].values[k] - gsp_result.ix[:,6].values[k]) <= 10:
-            TP += 1
-    except:
-        break
+for l in range(4, 10):
+    TP = 0
+    for k in range(len(dfd['lighting'].values)):
+        try:  
+#            if abs(dfd['lighting'].values[k] - gsp_result.ix[:,l].values[k]) <= 10:
+            if dfd['lighting'].values[k] == gsp_result.ix[:,l].values[k]:
+                TP += 1
+        except:
+            break
+    print TP
 
 #%%
 # True Negatives
-#0 e 10, 'refrigerator', TN = 14340 (0), TN = 16496 (10)     
-#1, 'kitchen_outlets1', TN = 10634
-#2, 'kitchen_outlets2', TN = 16815
-#3, 'microwave', TN = 14050
-#4, 5, 6, 7, 8, 9, 'lighting', TN = 10689 (4), TN = 10521 (5), TN = 18193 (6), TN = 14520 (7), TP = 11882 (8), TP = 11018 (9)
+#0 e 10, 'refrigerator', TN = 14340 (TN = 43774) (0), TN = 16496 (TN = 43547) (10)     
+#1, 'kitchen_outlets1', TN = 10634 (TN = 46029)
+#2, 'kitchen_outlets2', TN = 16815 (TN = 42970)
+#3, 'microwave', TN = 14050 (TN = 42747)
+#4, 5, 6, 7, 8, 9, 'lighting', TN = 10689 (TN = 42580) (4), TN = 10521 (TN = 28213) (5), TN = 18193 (TN = 13121) (6), TN = 14520 (TN = 21836) (7), TP = 11882 (TN = 31419) (8), TP = 11018 (TN = 42640) (9)
 
-TN = 0
-for l in dfd.columns:
-    if l == 'refrigerator':
-        continue
-    for k in range(len(dfd[l].values)):
-        try:  
-            if abs(dfd[l].values[k] - gsp_result.ix[:,0].values[k]) >= 10:
-            #if dfd[l].values[k] != gsp_result.ix[:,0].values[k]:    
-                TN += 1
-        except:
-            break
-print TN
+for m in range(4, 10):
+    TN = 0
+    for l in dfd.columns:
+        if l == 'lighting':
+            continue
+        for k in range(len(dfd[l].values)):
+            try:  
+#                if abs(dfd[l].values[k] - gsp_result.ix[:,m].values[k]) >= 10:
+                if dfd[l].values[k] != gsp_result.ix[:,m].values[k]:    
+                    TN += 1
+            except:
+                break
+    print TN
 
 #%%
 # False Positives
-#0 e 10, 'refrigerator', FP = 2302 (0), FP = 2529 (10)
-#1, 'kitchen_outlets1', FP = 47
-#2, 'kitchen_outlets2', FP = 3106
-#3, 'microwave', FP = 3329
-#4, 5, 6, 7, 8, 9, 'lighting', FP = 3496 (4), FP = 3515 (5), FP = 2426 (6), FP = 2552 (7), FP = 3375 (8), FP = 3436 (9)
+#0 e 10, 'refrigerator', FP = 2302 (FP = 31773) (0), FP = 2529 (FP = 29833) (10)
+#1, 'kitchen_outlets1', FP = 47 (FP = 35478)
+#2, 'kitchen_outlets2', FP = 3106 (FP = 29346)
+#3, 'microwave', FP = 3329 (FP = 32098)
+#4, 5, 6, 7, 8, 9, 'lighting', FP = 3496 (FP = 29297) (4), FP = 3515 (FP = 29432) (5), FP = 2426 (FP = 22991) (6), FP = 2552 (FP = 26653) (7), FP = 3375 (FP = 28182) (8), FP = 3436 (FP = 29002) (9)
 
+#for m in range(4, 10):
 FP = 0
 for l in dfd.columns:
-    if l == 'lighting':
+    if l == 'microwave':
         continue
     for k in range(len(dfd[l].values)):
         try:  
-            #if abs(dfd[l].values[k] - gsp_result.ix[:,2].values[k]) <= 10:
-            if dfd[l].values[k] == gsp_result.ix[:,9].values[k]:    
+            if abs(dfd[l].values[k] - gsp_result.ix[:,3].values[k]) <= 10:
+#            if dfd[l].values[k] == gsp_result.ix[:,3].values[k]:    
                 FP += 1
         except:
             break
@@ -622,25 +616,169 @@ print FP
 
 #False Negatives
 
-#'refrigerator', FN = 111
-#'kitchen_outlets1', FN = 37738 
-#'kitchen_outlets2', FN = 509
-#'microwave', FN = 0
-#lighting', FN = 14
+#'refrigerator', FN = 113, (FN = 2346) <=5 (FN = 76563) <=10
+#'kitchen_outlets1', FN = 38962 (FN = 96407) <= 5 (FN = 97547) <=10
+#'kitchen_outlets2', FN = 534 (FN = 124541) <=5 (FN = 127279) <=10
+#'microwave', FN = 0 (FN = 113369) <=5 (FN = 120865) <=10
+#'lighting', FN = 15 (FN = 4750) <=5 (FN = 112552) <=10
 
 FN = 0
 for l in range(len(gsp_result.columns)):
-#    if l == 0 and l == 10:
-#    if l == 1:
-#    if l == 2:
-#    if l == 3:
-    if l == 4 and l == 5 and l == 6 and l == 7 and l == 8 and l == 9:
+    if l == 0 and l == 10:
+    #if l == 1:
+    #if l == 2:
+    #if l == 3:
+    #if l == 4 and l == 5 and l == 6 and l == 7 and l == 8 and l == 9:
         continue
-    for k in range(len(dfd.values)):
-        try:
-            if dfd['lighting'].values[k] == gsp_result.ix[:,l].values[k]:    
-#            if abs(dfd['lighting'].values[k] - gsp_result.ix[:,l].values[k]) <= 5:
-                FN += 1
-        except:
-            break
+for k in range(len(dfd.values)):
+    try:
+    #if dfd['lighting'].values[k] == gsp_result.ix[:,l].values[k]:    
+        if abs(dfd['lighting'].values[k] - gsp_result.ix[:,l].values[k]) <= 10:
+            FN += 1
+    except:
+        break
 print FN
+
+#%%
+
+# ==
+
+TP = 108 #refrigerator
+TP = 3417 #kitchen_outlets1
+TP = 47 #kitchen_outlets2
+TP = 0 #microwave
+TP = 0 #lighting
+TP = 0 #lighting
+TP = 2 #lighting
+TP = 3 #lighting
+TP = 0 #lighting
+TP = 0 #lighting
+TP = 0 #refrigerator
+
+TP = [108, 3417, 47, 0, 0, 0, 2, 3, 0, 0, 0]
+
+TN = 43774 #refrigerator
+TN = 46029 #kitchen_outlets1
+TN = 16815 #kitchen_outlets2
+TN = 42747 #microwave
+TN = 42580 #lighting
+TN = 28213 #lighting
+TN = 13121 #lighting
+TN = 21836 #lighting
+TN = 31419 #lighting 
+TN = 42640 #lighting 
+TN = 43547 #refrigerator
+
+TN = [43774, 46029, 16815, 42747, 42580, 28213, 13121, 21836, 31419, 42640, 43547]
+
+FP = 31773 #refrigerator
+FP = 35478 #kitchen_outlets1
+FP = 29346 #kitchen_outlets2
+FP = 32098 #microwave
+FP = 29297 #lighting
+FP = 29432 #lighting
+FP = 22991 #lighting
+FP = 26653 #lighting
+FP = 28182 #lighting
+FP = 29002 #lighting
+FP = 29833 #refrigerator
+
+FP = [31773, 35478, 29346, 32098, 29297, 29432, 22991, 26653, 28182, 29002, 29833]
+
+FN = 113   #refrigerator
+FN = 38962 #kitchen_outlets1
+FN = 534   #kitchen_outlets2
+FN = 0     #microwave
+FN = 15    #lighting
+
+FN = [113, 38962, 534, 0, 15, 15, 15, 15, 15, 15, 113]
+
+# <=10
+
+TP = 7032 #refrigerator
+TP = 8137 #kitchen_outlets1
+TP = 9891 #kitchen_outlets2
+TP = 9786 #microwave
+TP = 8678 #lighting
+TP = 8704 #lighting
+TP = 9746 #lighting
+TP = 9038 #lighting
+TP = 8840 #lighting
+TP = 8539 #lighting
+TP = 4338 #refrigerator
+
+TP = [7032, 8137, 9891, 9786, 8678, 8704, 9746, 9038, 8840, 8539, 4338]
+
+TN = 14340 #refrigerator
+TN = 10634 #kitchen_outlets1
+TN = 16815 #kitchen_outlets2
+TN = 14050 #microwave
+TN = 10689 #lighting
+TN = 10521 #lighting
+TN = 18193 #lighting
+TN = 14520 #lighting
+TN = 11882 #lighting
+TN = 11018 #lighting
+TN = 16496 #refrigerator
+
+TN = [14340, 10634, 16815, 14050, 10689, 10521, 18193, 14520, 11882, 11018, 16496]
+
+FP = 2302 #refrigerator
+FP = 47   #kitchen_outlets1
+FP = 3106 #kitchen_outlets2
+FP = 3329 #microwave
+FP = 3496 #lighting
+FP = 3515 #lighting
+FP = 2426 #lighting
+FP = 2552 #lighting
+FP = 3375 #lighting
+FP = 3436 #lighting
+FP = 2529 #refrigerator
+
+FP = [2302, 47, 3106, 3329, 3496, 3515, 2426, 2552, 3375, 3436, 2529]
+
+FN = 76563  #refrigerator
+FN = 97547  #kitchen_outlets1
+FN = 127279 #kitchen_outlets2
+FN = 120865 #microwave
+FN = 112552 #lighting
+
+FN = [76563, 97547, 127279, 120865, 112552, 112552, 112552, 112552, 112552, 112552, 76563]
+
+# <=5
+
+FN = 2346   #refrigerator
+FN = 96407  #kitchen_outlets1
+FN = 124541 #kitchen_outlets2
+FN = 113369 #microwave
+FN = 4750   #lighting
+
+FN = [2346, 96407, 124541, 113369, 4750, 4750, 4750, 4750, 4750, 4750, 2346]
+
+#%%
+
+# ==
+
+#TP = [108, 3417, 47, 0, 0, 0, 2, 3, 0, 0, 0]
+#TN = [43774, 46029, 16815, 42747, 42580, 28213, 13121, 21836, 31419, 42640, 43547]
+#FP = [31773, 35478, 29346, 32098, 29297, 29432, 22991, 26653, 28182, 29002, 29833]
+FN = [113, 38962, 534, 0, 15, 15, 15, 15, 15, 15, 113]
+
+# <= 10
+
+TP = [7032, 8137, 9891, 9786, 8678, 8704, 9746, 9038, 8840, 8539, 4338]
+#TN = [14340, 10634, 16815, 14050, 10689, 10521, 18193, 14520, 11882, 11018, 16496]
+FP = [2302, 47, 3106, 3329, 3496, 3515, 2426, 2552, 3375, 3436, 2529]
+#FN = [76563, 97547, 127279, 120865, 112552, 112552, 112552, 112552, 112552, 112552, 76563]
+
+Precision = []
+Recall = []
+F1_score = []
+
+for i in range(11):
+    PR = float(TP[i])/float(TP[i] + FP[i])
+    RE = float(TP[i])/float(TP[i] + FN[i])
+    Precision.append(PR)
+    Recall.append(RE)
+    F1_score.append(2 * (PR * RE)/(PR + RE))
+
