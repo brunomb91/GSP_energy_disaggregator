@@ -21,8 +21,8 @@ print("1 of 6> reading data")
 
 # Datasets files
 # REDD House 1
-#csvfileaggr = "../Data/REDD/house_1/house1_aggr.csv"
-#csvfiledisaggr = "../Data/REDD/house_1/house1_disaggr.csv"
+csvfileaggr = "../Data/REDD/house_1/house1_aggr.csv"
+csvfiledisaggr = "../Data/REDD/house_1/house1_disaggr.csv"
 
 # REDD House 2
 #csvfileaggr = "../Data/REDD/house_2/house2_aggr2.csv"
@@ -37,8 +37,8 @@ print("1 of 6> reading data")
 #csvfiledisaggr = "../Data/REFIT/house8_disaggr.csv"
 
 # Demo files
-csvfileaggr = "./output_aggr.csv"
-csvfiledisaggr = "./output_disaggr.csv"
+#csvfileaggr = "./output_aggr.csv"
+#csvfiledisaggr = "./output_disaggr.csv"
 
 df = pd.read_csv(csvfileaggr, index_col = "Time") # read demo file with aggregated active power
 df.index = pd.to_datetime(df.index)
@@ -46,18 +46,18 @@ dfd = pd.read_csv(csvfiledisaggr, index_col = "Time") # read file with ground tr
 dfd.index = pd.to_datetime(dfd.index)
 
 # REDD House 1
-#dfd_house1 = pd.DataFrame()
-# 
-#dfd_house1['refrigerator'] = dfd['refrigerator']
-#dfd_house1['dishwasher'] = dfd['dishwasher']
-#dfd_house1['kitchen_outlets'] = dfd['kitchen_outlets']
-#dfd_house1['lighting'] = dfd['lighting']
-#dfd_house1['washer_dryer'] = dfd['washer_dryer']
-#dfd_house1['bathroom_gfi'] = dfd['bathroom_gfi']
-#dfd_house1['microwave'] = dfd['microwave']
-#dfd_house1['oven'] = dfd['oven']
-#
-#dfd_house1.index = pd.to_datetime(dfd_house1.index)
+dfd_house1 = pd.DataFrame()
+ 
+dfd_house1['refrigerator'] = dfd['refrigerator']
+dfd_house1['dishwasher'] = dfd['dishwasher']
+dfd_house1['kitchen_outlets'] = dfd['kitchen_outlets']
+dfd_house1['lighting'] = dfd['lighting']
+dfd_house1['washer_dryer'] = dfd['washer_dryer']
+dfd_house1['bathroom_gfi'] = dfd['bathroom_gfi']
+dfd_house1['microwave'] = dfd['microwave']
+dfd_house1['oven'] = dfd['oven']
+
+dfd_house1.index = pd.to_datetime(dfd_house1.index)
 
 # REDD House 2
 #dfd_house2 = pd.DataFrame()
@@ -102,15 +102,15 @@ dfd.index = pd.to_datetime(dfd.index)
 #dfd_house8.index = pd.to_datetime(dfd_house8.index)
 
 # select date range
-start_date = '2011-04-23' # from 2011-04-23
-end_date = '2011-05-02' # to 2011-05-01
+#start_date = '2011-04-23' # from 2011-04-23
+#end_date = '2011-05-02' # to 2011-05-01
 
 #start_date = '2011-04-23' # from 2011-04-23
 #end_date = '2011-04-30' # to 2011-05-01
 
 # REDD house 1 range
-#start_date = '2011-05-01' # from 2011-04-23
-#end_date = '2011-05-04' # to 2011-05-01
+start_date = '2011-05-01' # from 2011-04-23
+end_date = '2011-05-04' # to 2011-05-01
 
 # REDD house 2 range
 #start_date = '2011-04-18' # from 2011-04-23
@@ -132,8 +132,8 @@ df = df.loc[mask]
 #dfd = dfd.loc[mask]
 
 # REDD House 1
-#mask = (dfd_house1.index > start_date) & (dfd_house1.index < end_date)
-#dfd_house1 = dfd_house1.loc[mask]
+mask = (dfd_house1.index > start_date) & (dfd_house1.index < end_date)
+dfd_house1 = dfd_house1.loc[mask]
 
 # REDD House 2
 #mask = (dfd_house2.index > start_date) & (dfd_house2.index < end_date)
@@ -151,12 +151,12 @@ df = df.loc[mask]
 fig, axs = plt.subplots(3, 1, sharex=True)
 axs[0].plot(df)
 axs[0].set_title("Aggregated power", size=8)
-axs[0].set_title("Aggregated power of house 2 from April 23th to 30th 2011, downsampled to 1 minute", size=8)
+#axs[0].set_title("Aggregated power of house 2 from April 23th to 30th 2011, downsampled to 1 minute", size=8)
 #
-axs[1].stackplot(dfd.index, dfd.values.T, labels = list(dfd.columns.values))
+#axs[1].stackplot(dfd.index, dfd.values.T, labels = list(dfd.columns.values))
 
 # REDD House 1
-#axs[1].stackplot(dfd_house1.index, dfd_house1.values.T, labels = list(dfd_house1.columns.values))
+axs[1].stackplot(dfd_house1.index, dfd_house1.values.T, labels = list(dfd_house1.columns.values))
 
 ## REDD House 2
 #axs[1].stackplot(dfd_house2.index, dfd_house2.values.T, labels = list(dfd_house2.columns.values))
@@ -175,7 +175,7 @@ axs[1].legend(loc='upper left', fontsize=6)
 #REDD parameters
 # Please read the paper to undertand following parameters. Note initial values of these parameters depends on the appliances used and the frequency of usage.
 sigma = 20;
-ri = 0.75
+ri = 0.1
 T_Positive = 10;
 T_Negative = -10;
 #Following parameters alpha and beta are used in Equation 15 of the paper 
@@ -197,6 +197,8 @@ alpha = 0.5
 beta  = 0.5
 # this defines the  minimum number of times an appliance is set ON in considered time duration
 instancelimit = 3
+
+#%%
 
 t1 = time.time() 
 
@@ -225,7 +227,7 @@ appliance_pairs = gsp.feature_matching_module(pairs, delta_p, finalclusters, alp
 # create appliance wise disaggregated series
 power_series, appliance_signatures = gsp.generate_appliance_powerseries(appliance_pairs, delta_p)
 
-
+#%%
 # label the disaggregated appliance clusters by comparing with signature DB
 labeled_appliances = gsp.label_appliances(appliance_signatures, signature_database, threshold)
 
@@ -247,14 +249,14 @@ dfw.drop(dfw.index[1], axis=1)
 #dfw.to_csv("../Data/REDD/house_1/signature_database_house_1_main1.csv")
 
 # House 8 REFIT
-labeled_appliances[0] = 'microwave'
-labeled_appliances[1] = 'toaster'
-labeled_appliances[2] = 'Unknown'
-labeled_appliances[3] = 'freezer'
-labeled_appliances[4] = 'television_site'
-labeled_appliances[5] = 'washing machine'
-labeled_appliances[6] = 'computer'
-labeled_appliances[7] = 'Unknown'
+#labeled_appliances[0] = 'microwave'
+#labeled_appliances[1] = 'toaster'
+#labeled_appliances[2] = 'Unknown'
+#labeled_appliances[3] = 'freezer'
+#labeled_appliances[4] = 'television_site'
+#labeled_appliances[5] = 'washing machine'
+#labeled_appliances[6] = 'computer'
+#labeled_appliances[7] = 'Unknown'
 #labeled_appliances[8] = 'Unknown'
 #labeled_appliances[9] = 'Unknown'
 #labeled_appliances[10] = 'Unknown'
@@ -418,18 +420,18 @@ labeled_appliances[7] = 'Unknown'
 # House 1 REDD
 #labeled_appliances[0] = dfr.iloc[:0,0].name
 
-#labeled_appliances[0] = 'refrigerator' 
-#labeled_appliances[1] = 'dishwasher' 
-#labeled_appliances[2] = 'microwave'
-#labeled_appliances[3] = 'lighting'
-#labeled_appliances[4] = 'washer_dryer'
-#labeled_appliances[5] = 'bathroom_gfi'
-#labeled_appliances[6] = 'kitchen_outlets'
-#labeled_appliances[7] = 'oven'
-#labeled_appliances[8] = 'Unknown'
-#labeled_appliances[9] = 'Unknown'
-#labeled_appliances[10] = 'Unknown'
-#labeled_appliances[11] = 'Unknown'
+labeled_appliances[0] = 'refrigerator' 
+labeled_appliances[1] = 'dishwasher' 
+labeled_appliances[2] = 'microwave'
+labeled_appliances[3] = 'lighting'
+labeled_appliances[4] = 'washer_dryer'
+labeled_appliances[5] = 'bathroom_gfi'
+labeled_appliances[6] = 'kitchen_outlets'
+labeled_appliances[7] = 'oven'
+labeled_appliances[8] = 'Unknown'
+labeled_appliances[9] = 'Unknown'
+labeled_appliances[10] = 'Unknown'
+labeled_appliances[11] = 'Unknown'
 #labeled_appliances[12] = 'Unknown'
 #labeled_appliances[13] = 'Unknown'
 #labeled_appliances[14] = 'Unknown'
@@ -556,6 +558,8 @@ dfw.to_csv("../Data/REFIT/signatures/signature_house_8.csv")
 #2, 'kitchen_outlets2', TP = 9891 (TP = 47)
 #3, 'microwave', TP = 9786 (TP = 0)
 #4, 5, 6, 7, 8, 9 'lighting', TP = 8678 (TP = 0) (4), TP = 8704 (TP = 0) (5), TP = 9746 (TP = 2) (6), TP = 9038 (TP = 3) (7), TP = 8840 (TP = 0) (8), TP = 8539 (TP = 0) (9)
+
+
 
 for l in range(4, 10):
     TP = 0
@@ -767,13 +771,14 @@ FN = [113, 38962, 534, 0, 15, 15, 15, 15, 15, 15, 113]
 # <= 10
 
 TP = [7032, 8137, 9891, 9786, 8678, 8704, 9746, 9038, 8840, 8539, 4338]
-#TN = [14340, 10634, 16815, 14050, 10689, 10521, 18193, 14520, 11882, 11018, 16496]
+TN = [14340, 10634, 16815, 14050, 10689, 10521, 18193, 14520, 11882, 11018, 16496]
 FP = [2302, 47, 3106, 3329, 3496, 3515, 2426, 2552, 3375, 3436, 2529]
 #FN = [76563, 97547, 127279, 120865, 112552, 112552, 112552, 112552, 112552, 112552, 76563]
 
 Precision = []
 Recall = []
 F1_score = []
+Accuracy = []
 
 for i in range(11):
     PR = float(TP[i])/float(TP[i] + FP[i])
@@ -781,4 +786,4 @@ for i in range(11):
     Precision.append(PR)
     Recall.append(RE)
     F1_score.append(2 * (PR * RE)/(PR + RE))
-
+    Accuracy.append(float(TP[i] + TN[i])/float(TP[i] + TN[i] + FP[i] + FN[i]))
