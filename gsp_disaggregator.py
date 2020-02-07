@@ -559,7 +559,7 @@ dfw.to_csv("../Data/REFIT/signatures/signature_house_8.csv")
 #3, 'microwave', TP = 9786 (TP = 0)
 #4, 5, 6, 7, 8, 9 'lighting', TP = 8678 (TP = 0) (4), TP = 8704 (TP = 0) (5), TP = 9746 (TP = 2) (6), TP = 9038 (TP = 3) (7), TP = 8840 (TP = 0) (8), TP = 8539 (TP = 0) (9)
 
-
+# df_result = dfd_house1.join(gsp_result, lsuffix='_dfd', rsuffix='_result')
 
 for l in range(4, 10):
     TP = 0
