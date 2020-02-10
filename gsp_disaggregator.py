@@ -21,8 +21,8 @@ print("1 of 6> reading data")
 
 # Datasets files
 # REDD House 1
-csvfileaggr = "../Data/REDD/house_1/house1_aggr.csv"
-csvfiledisaggr = "../Data/REDD/house_1/house1_disaggr.csv"
+#csvfileaggr = "../Data/REDD/house_1/house1_aggr.csv"
+#csvfiledisaggr = "../Data/REDD/house_1/house1_disaggr.csv"
 
 # REDD House 2
 #csvfileaggr = "../Data/REDD/house_2/house2_aggr2.csv"
@@ -33,8 +33,8 @@ csvfiledisaggr = "../Data/REDD/house_1/house1_disaggr.csv"
 #csvfiledisaggr = "../Data/REDD/house_6/house6_disaggr.csv"
 
 #REFIT House 8
-#csvfileaggr = "../Data/REFIT/house8_aggr.csv"
-#csvfiledisaggr = "../Data/REFIT/house8_disaggr.csv"
+csvfileaggr = "../Data/REFIT/house8_aggr.csv"
+csvfiledisaggr = "../Data/REFIT/house8_disaggr.csv"
 
 # Demo files
 #csvfileaggr = "./output_aggr.csv"
@@ -46,18 +46,18 @@ dfd = pd.read_csv(csvfiledisaggr, index_col = "Time") # read file with ground tr
 dfd.index = pd.to_datetime(dfd.index)
 
 # REDD House 1
-dfd_house1 = pd.DataFrame()
- 
-dfd_house1['refrigerator'] = dfd['refrigerator']
-dfd_house1['dishwasher'] = dfd['dishwasher']
-dfd_house1['kitchen_outlets'] = dfd['kitchen_outlets']
-dfd_house1['lighting'] = dfd['lighting']
-dfd_house1['washer_dryer'] = dfd['washer_dryer']
-dfd_house1['bathroom_gfi'] = dfd['bathroom_gfi']
-dfd_house1['microwave'] = dfd['microwave']
-dfd_house1['oven'] = dfd['oven']
-
-dfd_house1.index = pd.to_datetime(dfd_house1.index)
+#dfd_house1 = pd.DataFrame()
+# 
+#dfd_house1['refrigerator'] = dfd['refrigerator']
+#dfd_house1['dishwasher'] = dfd['dishwasher']
+#dfd_house1['kitchen_outlets'] = dfd['kitchen_outlets']
+#dfd_house1['lighting'] = dfd['lighting']
+#dfd_house1['washer_dryer'] = dfd['washer_dryer']
+#dfd_house1['bathroom_gfi'] = dfd['bathroom_gfi']
+#dfd_house1['microwave'] = dfd['microwave']
+#dfd_house1['oven'] = dfd['oven']
+#
+#dfd_house1.index = pd.to_datetime(dfd_house1.index)
 
 # REDD House 2
 #dfd_house2 = pd.DataFrame()
@@ -74,8 +74,8 @@ dfd_house1.index = pd.to_datetime(dfd_house1.index)
 
 # REDD House 6
 #dfd_house6 = pd.DataFrame()
-
-#dfd_house6['microwave'] = dfd['microwave']
+#
+##dfd_house6['microwave'] = dfd['microwave']
 #dfd_house6['kitchen_outlets'] = dfd['kitchen_outlets']
 #dfd_house6['stove'] = dfd['stove']
 #dfd_house6['refrigerator'] = dfd['refrigerator']
@@ -88,18 +88,18 @@ dfd_house1.index = pd.to_datetime(dfd_house1.index)
 #dfd_house6.index = pd.to_datetime(dfd_house6.index)
 
 ## REFIT House 8
-#dfd_house8 = pd.DataFrame()
-#
-#dfd_house8['microwave'] = dfd['microwave']
-#dfd_house8['toaster'] = dfd['toaster']
-#dfd_house8['kettle'] = dfd['kettle']
-##dfd_house8['refrigerator'] = dfd['refrigerator']
-#dfd_house8['freezer'] = dfd['freezer']
-#dfd_house8['television_site'] = dfd['television_site']
-#dfd_house8['washing_machine'] = dfd['washing_machine']
-#dfd_house8['computer'] = dfd['computer']
-#
-#dfd_house8.index = pd.to_datetime(dfd_house8.index)
+dfd_house8 = pd.DataFrame()
+
+dfd_house8['microwave'] = dfd['microwave']
+dfd_house8['toaster'] = dfd['toaster']
+dfd_house8['kettle'] = dfd['kettle']
+#dfd_house8['refrigerator'] = dfd['refrigerator']
+dfd_house8['freezer'] = dfd['freezer']
+dfd_house8['television_site'] = dfd['television_site']
+dfd_house8['washing_machine'] = dfd['washing_machine']
+dfd_house8['computer'] = dfd['computer']
+
+dfd_house8.index = pd.to_datetime(dfd_house8.index)
 
 # select date range
 #start_date = '2011-04-23' # from 2011-04-23
@@ -109,8 +109,8 @@ dfd_house1.index = pd.to_datetime(dfd_house1.index)
 #end_date = '2011-04-30' # to 2011-05-01
 
 # REDD house 1 range
-start_date = '2011-05-01' # from 2011-04-23
-end_date = '2011-05-04' # to 2011-05-01
+#start_date = '2011-05-01' # from 2011-04-23
+#end_date = '2011-05-04' # to 2011-05-01
 
 # REDD house 2 range
 #start_date = '2011-04-18' # from 2011-04-23
@@ -121,8 +121,8 @@ end_date = '2011-05-04' # to 2011-05-01
 #end_date = '2011-05-25' # to 2011-05-01
 
 # REFIT range
-#start_date = '2013-12-01' # from 2011-04-23
-#end_date = '2013-12-04' # to 2011-05-01
+start_date = '2013-12-01' # from 2011-04-23
+end_date = '2013-12-04' # to 2011-05-01
 
 mask = (df.index > start_date) & (df.index < end_date)
 df = df.loc[mask]
@@ -132,8 +132,8 @@ df = df.loc[mask]
 #dfd = dfd.loc[mask]
 
 # REDD House 1
-mask = (dfd_house1.index > start_date) & (dfd_house1.index < end_date)
-dfd_house1 = dfd_house1.loc[mask]
+#mask = (dfd_house1.index > start_date) & (dfd_house1.index < end_date)
+#dfd_house1 = dfd_house1.loc[mask]
 
 # REDD House 2
 #mask = (dfd_house2.index > start_date) & (dfd_house2.index < end_date)
@@ -144,8 +144,8 @@ dfd_house1 = dfd_house1.loc[mask]
 #dfd_house6 = dfd_house6.loc[mask]
 
 # REFIT House 8
-#mask = (dfd_house8.index > start_date) & (dfd_house8.index < end_date)
-#dfd_house8 = dfd_house8.loc[mask]
+mask = (dfd_house8.index > start_date) & (dfd_house8.index < end_date)
+dfd_house8 = dfd_house8.loc[mask]
 
 
 fig, axs = plt.subplots(3, 1, sharex=True)
@@ -156,7 +156,7 @@ axs[0].set_title("Aggregated power", size=8)
 #axs[1].stackplot(dfd.index, dfd.values.T, labels = list(dfd.columns.values))
 
 # REDD House 1
-axs[1].stackplot(dfd_house1.index, dfd_house1.values.T, labels = list(dfd_house1.columns.values))
+#axs[1].stackplot(dfd_house1.index, dfd_house1.values.T, labels = list(dfd_house1.columns.values))
 
 ## REDD House 2
 #axs[1].stackplot(dfd_house2.index, dfd_house2.values.T, labels = list(dfd_house2.columns.values))
@@ -165,7 +165,7 @@ axs[1].stackplot(dfd_house1.index, dfd_house1.values.T, labels = list(dfd_house1
 #axs[1].stackplot(dfd_house6.index, dfd_house6.values.T, labels = list(dfd_house6.columns.values))
 #
 # REFIT House 8
-#axs[1].stackplot(dfd_house8.index, dfd_house8.values.T, labels = list(dfd_house8.columns.values))
+axs[1].stackplot(dfd_house8.index, dfd_house8.values.T, labels = list(dfd_house8.columns.values))
 
 
 axs[1].set_title("Disaggregated appliance power [Ground Truth]", size=8)
@@ -175,7 +175,7 @@ axs[1].legend(loc='upper left', fontsize=6)
 #REDD parameters
 # Please read the paper to undertand following parameters. Note initial values of these parameters depends on the appliances used and the frequency of usage.
 sigma = 20;
-ri = 0.1
+ri = 2.25
 T_Positive = 10;
 T_Negative = -10;
 #Following parameters alpha and beta are used in Equation 15 of the paper 
@@ -213,7 +213,7 @@ threshold = 3000
 #threshold = 70000 
 #threshold_max = 200000 
 
-#delta_p = [np.around(data_vec[i+1] - data_vec[i], 2) for i in range(0, len(data_vec) - 1)]
+#delta_p = [np.around(data_vec[i+1]  - data_vec[i], 2) for i in range(0, len(data_vec) - 1)]
 delta_p = [round(data_vec[i+1] - data_vec[i], 2) for i in range(0, len(data_vec) - 1)]
 event =  [i for i in range(0, len(delta_p)) if (delta_p[i] > T_Positive or delta_p[i] < T_Negative) ]
 
@@ -249,11 +249,11 @@ dfw.drop(dfw.index[1], axis=1)
 #dfw.to_csv("../Data/REDD/house_1/signature_database_house_1_main1.csv")
 
 # House 8 REFIT
-#labeled_appliances[0] = 'microwave'
-#labeled_appliances[1] = 'toaster'
-#labeled_appliances[2] = 'Unknown'
-#labeled_appliances[3] = 'freezer'
-#labeled_appliances[4] = 'television_site'
+labeled_appliances[0] = 'microwave'
+labeled_appliances[1] = 'toaster'
+labeled_appliances[2] = 'Unknown'
+labeled_appliances[3] = 'freezer'
+labeled_appliances[4] = 'television_site'
 #labeled_appliances[5] = 'washing machine'
 #labeled_appliances[6] = 'computer'
 #labeled_appliances[7] = 'Unknown'
@@ -420,18 +420,18 @@ dfw.drop(dfw.index[1], axis=1)
 # House 1 REDD
 #labeled_appliances[0] = dfr.iloc[:0,0].name
 
-labeled_appliances[0] = 'refrigerator' 
-labeled_appliances[1] = 'dishwasher' 
-labeled_appliances[2] = 'microwave'
-labeled_appliances[3] = 'lighting'
-labeled_appliances[4] = 'washer_dryer'
-labeled_appliances[5] = 'bathroom_gfi'
-labeled_appliances[6] = 'kitchen_outlets'
-labeled_appliances[7] = 'oven'
-labeled_appliances[8] = 'Unknown'
-labeled_appliances[9] = 'Unknown'
-labeled_appliances[10] = 'Unknown'
-labeled_appliances[11] = 'Unknown'
+#labeled_appliances[0] = 'refrigerator' 
+#labeled_appliances[1] = 'dishwasher' 
+#labeled_appliances[2] = 'microwave'
+#labeled_appliances[3] = 'lighting'
+#labeled_appliances[4] = 'washer_dryer'
+#labeled_appliances[5] = 'bathroom_gfi'
+#labeled_appliances[6] = 'kitchen_outlets'
+#labeled_appliances[7] = 'oven'
+#labeled_appliances[8] = 'Unknown'
+#labeled_appliances[9] = 'Unknown'
+#labeled_appliances[10] = 'Unknown'
+#labeled_appliances[11] = 'Unknown'
 #labeled_appliances[12] = 'Unknown'
 #labeled_appliances[13] = 'Unknown'
 #labeled_appliances[14] = 'Unknown'
@@ -506,11 +506,11 @@ print("6 of 6> plotting the input and results :)")
 
 plt.show()
 
-gsp.calculate_energy_pct(dfd, gsp_result)
+#gsp.calculate_energy_pct(dfd, gsp_result)
 #gsp.calculate_energy_pct(dfd_house1, gsp_result),
 #gsp.calculate_energy_pct(dfd_house2, gsp_result)
 #gsp.calculate_energy_pct(dfd_house6, gsp_result)
-#gsp.calculate_energy_pct(dfd_house8, gsp_result)
+gsp.calculate_energy_pct(dfd_house8, gsp_result)
 #gsp.calculate_energy_pct(dfd, gsp_result_useful)
 
 t2 = time.time()
@@ -561,16 +561,16 @@ dfw.to_csv("../Data/REFIT/signatures/signature_house_8.csv")
 
 # df_result = dfd_house1.join(gsp_result, lsuffix='_dfd', rsuffix='_result')
 
-for l in range(4, 10):
-    TP = 0
-    for k in range(len(dfd['lighting'].values)):
-        try:  
+#for l in range(4, 10):
+TP = 0
+for k in range(len(dfd['lighting'].values)):
+    try:  
 #            if abs(dfd['lighting'].values[k] - gsp_result.ix[:,l].values[k]) <= 10:
-            if dfd['lighting'].values[k] == gsp_result.ix[:,l].values[k]:
-                TP += 1
-        except:
-            break
-    print TP
+        if dfd['lighting'].values[k] == gsp_result.ix[:,l].values[k]:
+            TP += 1
+    except:
+        break
+print TP
 
 #%%
 # True Negatives
